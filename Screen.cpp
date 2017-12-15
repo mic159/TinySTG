@@ -7,10 +7,14 @@
 #include "Mathmatics.hpp"
 #include "Screen.hpp"
 
+#define OLED_CS   8
+#define OLED_DC   10
+#define OLED_RST  9
+
 Screen* Screen::screen = NULL;
 
 Screen::Screen(int color_mode)
-:tiny_screen(TinyScreen(TinyScreenPlus))
+:tiny_screen(OLED_CS, OLED_DC, OLED_RST)
 ,color_mode(color_mode)
 ,current_screen_buffer(0)
 ,buffer_size(WIDTH * HEIGHT)
@@ -18,17 +22,17 @@ Screen::Screen(int color_mode)
 	this->tiny_screen.begin();
 	if(color_mode == 8)
 	{
-		this->tiny_screen.setBitDepth(TSBitDepth8);
-		this->tiny_screen.fontColor(TS_8b_White, TS_8b_Black);
+		//this->tiny_screen.setBitDepth(TSBitDepth8);
+		//this->tiny_screen.fontColor(TS_8b_White, TS_8b_Black);
 	}
 	else
 	{
 		this->buffer_size *= 2;
-		this->tiny_screen.setBitDepth(TSBitDepth16);
-		this->tiny_screen.fontColor(TS_16b_White, TS_16b_Black);
+		//this->tiny_screen.setBitDepth(TSBitDepth16);
+		this->tiny_screen.setTextColor(WHITE, BLACK);
 	}
 	this->tiny_screen.setBrightness(7);
-	this->tiny_screen.setFont(liberationSansNarrow_12ptFontInfo);
+	//this->tiny_screen.setFont(liberationSansNarrow_12ptFontInfo);
 	this->screen_buffer[0] = new unsigned char[this->buffer_size];
 	memset(this->screen_buffer[0], 0, this->buffer_size);
 #if defined(USE_DMA)
@@ -98,16 +102,21 @@ void Screen::DrawEnd(void)
 	while(!this->tiny_screen.getReadyStatusDMA());
 	this->tiny_screen.endTransfer();
 #endif
-	this->tiny_screen.goTo(0, 0);
-	this->tiny_screen.setX(0, WIDTH - 1);
-	this->tiny_screen.setY(0, HEIGHT - 1);
-	this->tiny_screen.startData();
+//	this->tiny_screen.goTo(0, 0);
+//	this->tiny_screen.setX(0, WIDTH - 1);
+//	this->tiny_screen.setY(0, HEIGHT - 1);
+	this->tiny_screen.startPushData(0, 0, WIDTH - 1, HEIGHT - 1);
 #if defined(USE_DMA)
 	this->current_screen_buffer = 1 - this->current_screen_buffer;
 	this->tiny_screen.writeBufferDMA(this->screen_buffer[this->current_screen_buffer], this->buffer_size);
 #else
-	this->tiny_screen.writeBuffer(this->screen_buffer[0], this->buffer_size);
-	this->tiny_screen.endTransfer();
+  unsigned short* screen_buffer16 = reinterpret_cast<unsigned short*>(this->screen_buffer[0]);
+  int buffer_size_16 = this->buffer_size / 2;
+  for (int j = 0; j < buffer_size_16; ++j) {
+    this->tiny_screen.pushData(screen_buffer16[j]);
+  }
+	//this->tiny_screen.writeBuffer(this->screen_buffer[0], this->buffer_size);
+	this->tiny_screen.endPushData();
 #endif
 }
 
@@ -131,7 +140,7 @@ void Screen::DrawSprite(const void* buffer, int x, int y, int width, int height,
 	}
 	int clip_width = width;
 	int clip_height = height;
-	const char* clip_buffer = reinterpret_cast<const char*>(buffer);
+	const uint16_t* clip_buffer = reinterpret_cast<const uint16_t*>(buffer);
 	if(x < 0)
 	{
 		clip_buffer -= x;
@@ -175,7 +184,7 @@ void Screen::DrawSprite(const void* buffer, int x, int y, int width, int height,
 	}
 	int clip_width = width;
 	int clip_height = height;
-	const char* clip_buffer = reinterpret_cast<const char*>(buffer) + source_y * source_width + source_x;
+	const uint16_t* clip_buffer = reinterpret_cast<const uint16_t*>(buffer) + source_y * source_width + source_x;
 	if(x < 0)
 	{
 		clip_buffer -= x;
@@ -378,7 +387,7 @@ void Screen::DrawSpriteNoClip(const void* buffer, int x, int y, int width, int h
 }
 
 // for Debug
-TinyScreen* Screen::GetTinyScreen(void)
-{
-	return &this->tiny_screen;
-}
+//TinyScreen* Screen::GetTinyScreen(void)
+//{
+//	return &this->tiny_screen;
+//}

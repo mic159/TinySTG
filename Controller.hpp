@@ -7,14 +7,14 @@ public:
 	enum
 	{
 		// Pin
-		DIR_X_PIN = 42,
-		DIR_Y_PIN = 1,
-		DIR_UP_PIN = 42,
-		DIR_DOWN_PIN = 19,
-		DIR_LEFT_PIN = 25,
-		DIR_RIGHT_PIN = 15,
-		BUTTON_LEFT_PIN = 45,
-		BUTTON_RIGHT_PIN = 44,
+//		DIR_X_PIN = 42,
+//		DIR_Y_PIN = 1,
+		DIR_UP_PIN = 5,
+		DIR_DOWN_PIN = 2,
+		DIR_LEFT_PIN = 3,
+		DIR_RIGHT_PIN = 11,
+		BUTTON_LEFT_PIN = 0,
+		BUTTON_RIGHT_PIN = 1,
 		// Button
 		BUTTON_UP = 0x01,
 		BUTTON_DOWN = 0x02,

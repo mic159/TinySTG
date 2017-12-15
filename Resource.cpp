@@ -60,17 +60,17 @@ const BgMapData bg_map_data[BG_MAP_MAX] =
 	{NULL, 0, 0, 0, 0, 0},
 };
 
-const SoundData sound_data[SOUND_MAX] = 
-{
-	// buffer, size
-	{NULL, 0},
-	{Crush_wave, sizeof(Crush_wave)},
-	{CrushBoss_wave, sizeof(CrushBoss_wave)},
-	{Gun_wave, sizeof(Gun_wave)},
-	{PowerUp_wave, sizeof(PowerUp_wave)},
-	{Bomb_wave, sizeof(Bomb_wave)},
-	{Get_wave, sizeof(Get_wave)},
-};
+//const SoundData sound_data[SOUND_MAX] = 
+//{
+//	// buffer, size
+//	{NULL, 0},
+//	{Crush_wave, sizeof(Crush_wave)},
+//	{CrushBoss_wave, sizeof(CrushBoss_wave)},
+//	{Gun_wave, sizeof(Gun_wave)},
+//	{PowerUp_wave, sizeof(PowerUp_wave)},
+//	{Bomb_wave, sizeof(Bomb_wave)},
+//	{Get_wave, sizeof(Get_wave)},
+//};
 
 const Data* GetData(int number)
 {
@@ -89,5 +89,5 @@ const BgMapData* GetBgMapData(int number)
 
 const SoundData* GetSoundData(int number)
 {
-	return &sound_data[number];
+	return NULL;
 }

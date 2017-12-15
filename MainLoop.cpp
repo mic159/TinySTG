@@ -8,7 +8,7 @@
 void MainLoop_Setup(void)
 {
 	Global::Initialize();
-	Screen::Initialize(8);
+	Screen::Initialize(16);
 	Controller::Initialize();
 	SoundPlayer::Initialize(11025);
 	Global& global = Global::GetInstance();
@@ -73,7 +73,7 @@ void MainLoop_Loop(void)
 			global.phase = Global::PHASE_DAIMON_LOGO;
 		}
 		++ global.count;
-		if(global.count > 60 * 5)
+		if(global.count > 60 * 1)
 		{
 			global.phase = Global::PHASE_DAIMON_LOGO;
 			global.count = 0;
@@ -89,7 +89,7 @@ void MainLoop_Loop(void)
 			global.phase = Global::PHASE_TITLE;
 		}
 		++ global.count;
-		if(global.count > 60 * 5)
+		if(global.count > 60 * 1)
 		{
 			global.phase = Global::PHASE_TITLE;
 			global.count = 0;
@@ -199,6 +199,6 @@ void MainLoop_Loop(void)
 
 void MainLoop_NoWaitLoop(void)
 {
-	SoundPlayer& sound_player = SoundPlayer::GetInstance();
-	sound_player.Update();
+	//SoundPlayer& sound_player = SoundPlayer::GetInstance();
+	//sound_player.Update();
 }

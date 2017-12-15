@@ -131,22 +131,22 @@ void Game::Initialize(int stage, int difficulty)
 	}
 	this->bullet_rate_interval = this->bullet_rate_interval_count;
 	this->left = LEFT;
-	SoundPlayer& sound_player = SoundPlayer::GetInstance();
-	this->sound_handle[SOUND_BGM] = sound_player.Append(0, "TinySTG/bgm.raw", true);
-	const SoundData* sound_data = GetSoundData(SOUND_CRUSH);
-	this->sound_handle[SOUND_CRUSH] = sound_player.Append(1, sound_data->buffer, sound_data->size, false);
-	sound_data = GetSoundData(SOUND_CRUSH_BOSS);
-	this->sound_handle[SOUND_CRUSH_BOSS] = sound_player.Append(2, sound_data->buffer, sound_data->size, false);
-	sound_data = GetSoundData(SOUND_GUN);
-	this->sound_handle[SOUND_GUN] = sound_player.Append(3, sound_data->buffer, sound_data->size, false);
-	sound_data = GetSoundData(SOUND_POWER_UP);
-	this->sound_handle[SOUND_POWER_UP] = sound_player.Append(4, sound_data->buffer, sound_data->size, false);
-	sound_data = GetSoundData(SOUND_BOMB);
-	this->sound_handle[SOUND_BOMB] = sound_player.Append(4, sound_data->buffer, sound_data->size, false);
-	sound_data = GetSoundData(SOUND_GET);
-	this->sound_handle[SOUND_GET] = sound_player.Append(4, sound_data->buffer, sound_data->size, false);
+//	SoundPlayer& sound_player = SoundPlayer::GetInstance();
+//	this->sound_handle[SOUND_BGM] = sound_player.Append(0, "TinySTG/bgm.raw", true);
+//	const SoundData* sound_data = GetSoundData(SOUND_CRUSH);
+//	this->sound_handle[SOUND_CRUSH] = sound_player.Append(1, sound_data->buffer, sound_data->size, false);
+//	sound_data = GetSoundData(SOUND_CRUSH_BOSS);
+//	this->sound_handle[SOUND_CRUSH_BOSS] = sound_player.Append(2, sound_data->buffer, sound_data->size, false);
+//	sound_data = GetSoundData(SOUND_GUN);
+//	this->sound_handle[SOUND_GUN] = sound_player.Append(3, sound_data->buffer, sound_data->size, false);
+//	sound_data = GetSoundData(SOUND_POWER_UP);
+//	this->sound_handle[SOUND_POWER_UP] = sound_player.Append(4, sound_data->buffer, sound_data->size, false);
+//	sound_data = GetSoundData(SOUND_BOMB);
+//	this->sound_handle[SOUND_BOMB] = sound_player.Append(4, sound_data->buffer, sound_data->size, false);
+//	sound_data = GetSoundData(SOUND_GET);
+//	this->sound_handle[SOUND_GET] = sound_player.Append(4, sound_data->buffer, sound_data->size, false);
 	// Play BGM
-	sound_player.Play(this->sound_handle[SOUND_BGM]);
+//	sound_player.Play(this->sound_handle[SOUND_BGM]);
 	// boss test
 //	SetEnemy((96 / 2) << 10, -32 << 10, BOSS2, 0);
 }
@@ -154,15 +154,15 @@ void Game::Initialize(int stage, int difficulty)
 void Game::Finalize(void)
 {
 	Global& global = Global::GetInstance();
-	SoundPlayer& sound_player = SoundPlayer::GetInstance();
-	sound_player.StopAll();
-	sound_player.Delete(this->sound_handle[SOUND_BGM]);
-	sound_player.Delete(this->sound_handle[SOUND_CRUSH]);
-	sound_player.Delete(this->sound_handle[SOUND_CRUSH_BOSS]);
-	sound_player.Delete(this->sound_handle[SOUND_GUN]);
-	sound_player.Delete(this->sound_handle[SOUND_POWER_UP]);
-	sound_player.Delete(this->sound_handle[SOUND_BOMB]);
-	sound_player.Delete(this->sound_handle[SOUND_GET]);
+//	SoundPlayer& sound_player = SoundPlayer::GetInstance();
+//	sound_player.StopAll();
+//	sound_player.Delete(this->sound_handle[SOUND_BGM]);
+//	sound_player.Delete(this->sound_handle[SOUND_CRUSH]);
+//	sound_player.Delete(this->sound_handle[SOUND_CRUSH_BOSS]);
+//	sound_player.Delete(this->sound_handle[SOUND_GUN]);
+//	sound_player.Delete(this->sound_handle[SOUND_POWER_UP]);
+//	sound_player.Delete(this->sound_handle[SOUND_BOMB]);
+//	sound_player.Delete(this->sound_handle[SOUND_GET]);
 	ClearCharacter();
 	global.highscore = this->highscore;
 	global.score = this->score;
@@ -172,7 +172,7 @@ bool Game::Update(void)
 {
 	Controller& controller = Controller::GetInstance();
 	unsigned int button = controller.GetButton();
-	SoundPlayer& sound_player = SoundPlayer::GetInstance();
+//	SoundPlayer& sound_player = SoundPlayer::GetInstance();
 	this->player.Update();
 	unsigned int status = this->player.GetStatus();
 	int fighter_x = 0;
@@ -180,7 +180,7 @@ bool Game::Update(void)
 	this->player.GetPosition(fighter_x, fighter_y);
 	if((this->continue_count == 0) && (this->gameover == false) && (status == Player::STATUS_DEAD))
 	{
-		sound_player.Play(this->sound_handle[SOUND_CRUSH_BOSS]);
+//		sound_player.Play(this->sound_handle[SOUND_CRUSH_BOSS]);
 		SetExplode(fighter_x, fighter_y, 0, 0);
 		for(int j = 0; j < (this->player.GetShotPower() >> 1); ++ j)
 		{
@@ -306,7 +306,7 @@ bool Game::Update(void)
 							this->spawn = 3;
 						}
 						this->item_interval = ITEM_INTERVAL;
-						sound_player.Play(this->sound_handle[SOUND_CRUSH_BOSS]);
+//						sound_player.Play(this->sound_handle[SOUND_CRUSH_BOSS]);
 						this->draw_stage = DRAW_STAGE_TIME;
 						this->score += 3000;
 					}
@@ -317,7 +317,7 @@ bool Game::Update(void)
 							// revenge bullet
 							SetBulletToFighter(enemy_x, enemy_y, GetBulletSpeed(), Game::BULLET_TYPE_NORMAL, 1);
 						}
-						sound_player.Play(this->sound_handle[SOUND_CRUSH]);
+//						sound_player.Play(this->sound_handle[SOUND_CRUSH]);
 						if(this->enemy[j]->GetType() >= ENEMY4)
 						{
 							this->score += 300;
@@ -414,12 +414,12 @@ bool Game::Update(void)
 							if(result == false)
 							{
 								// power max
-								sound_player.Play(this->sound_handle[SOUND_GET]);
+//								sound_player.Play(this->sound_handle[SOUND_GET]);
 								this->score += 1000;
 							}
 							else
 							{
-								sound_player.Play(this->sound_handle[SOUND_POWER_UP]);
+//								sound_player.Play(this->sound_handle[SOUND_POWER_UP]);
 							}
 						}
 						else if(this->player.IsInvincinle() == false)
@@ -612,7 +612,7 @@ unsigned char Game::GetBackColor(void)
 
 void Game::SetShot(void)
 {
-	// äÔêî
+	// ÔøΩÔêî
 	static const ShotInfo shot_table_odd[Player::SHOT_UP_MAX - 1] =
 	{
 		{3 << 10, 0 << 10, 0 << 8, -4 << 10, SHOT_CENTER},
@@ -623,7 +623,7 @@ void Game::SetShot(void)
 		{-6 << 10, 6 << 10, -3 << 8, -4 << 10, SHOT_LEFT},
 		{11 << 10, 6 << 10, 3 << 8, -4 << 10, SHOT_RIGHT},
 	};
-	// ãÙêî
+	// ÔøΩÔøΩÔøΩÔøΩ
 	static const ShotInfo shot_table_even[Player::SHOT_UP_MAX] =
 	{
 		{0 << 10, 0 << 10, 0 << 8, -4 << 10, SHOT_LEFT},
@@ -890,7 +890,7 @@ void Game::Spawn(int index)
 	-- this->spawn_info[index].repeat_count;
 	if(this->spawn_info[index].repeat_count <= 0)
 	{
-		// éüâÒèoåªÇÃìGÇíäëIÇ∑ÇÈ
+		// ÔøΩÔøΩÔøΩÔøΩoÔøΩÔøΩÔøΩÃìGÔøΩíäëIÔøΩÔøΩÔøΩÔøΩ
 		this->spawn_info[index].spawn_number = SpawnNumber(this->stage);
 		switch(this->spawn_info[index].spawn_number)
 		{
@@ -952,7 +952,7 @@ void Game::Spawn(int index)
 	}
 	else if(this->spawn_info[index].rapid == 0)
 	{
-		// ç¿ïWÇïœÇ¶ÇÈ
+		// ÔøΩÔøΩÔøΩWÔøΩÔøΩœÇÔøΩÔøΩÔøΩ
 		switch(this->spawn_info[index].spawn_number)
 		{
 		case 1:
