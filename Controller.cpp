@@ -91,11 +91,11 @@ void Controller::Update(void)
 	}
 	if(digitalRead(BUTTON_LEFT_PIN))
 	{
-		this->button |= BUTTON_1;
+		this->button |= BUTTON_2;
 	}
 	if(digitalRead(BUTTON_RIGHT_PIN))
 	{
-		this->button |= BUTTON_2;
+		this->button |= BUTTON_1;
 	}
 }
 
